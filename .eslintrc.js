@@ -12,11 +12,6 @@ module.exports = {
 	plugins: [],
 	// add your custom rules here
 	rules: {
-		'vue/multi-word-component-names': [
-			'error',
-			{
-				ignores: ['default'],
-			},
-		],
+		'vue/multi-word-component-names': 0,
 	},
 }
