@@ -2,10 +2,9 @@ import NavBar from '@/components/NavBar.vue';
 <template>
 	<div>
 		<nav-bar></nav-bar>
-		
 		<main>
 			<div class="px-3">
-				<nuxt> </nuxt>
+				<Nuxt> </Nuxt>
 			</div>
 		</main>
 	</div>

@@ -1,4 +1,6 @@
 export const state = () => ({
+	isLoading: false,
+
 	movies: [],
 	currentPage: 1,
 	totalPages: 1,
@@ -8,16 +10,22 @@ export const state = () => ({
 	genres: [],
 })
 export const getters = {
+	isApiLoading: (state) => state.isLoading,
+
 	getMovies: (state) => state.movies,
 	getTotal: (state) => state.totalMoviesResults,
 	getFavourite: (state) => {
 		return state.movies.filter((movie) => movie.favourite)
 	},
+	getSerials: (state) => state.serials,
 	getGenres: (state) => state.genres,
 	getCurrentPage: (state) => state.currentPage,
 }
 
 export const actions = {
+	handleIsLoading({ commit }, val) {
+		commit('handleIsLoading', val)
+	},
 	getSerials({ commit }, { page = 1, limit = 20, genres = '' } = {}) {
 		const params = new URLSearchParams()
 		params.append('page', page)
@@ -50,14 +58,14 @@ export const actions = {
 			params,
 		}
 		return await this.$cinema('movies/', options)
-			.then(({ data }) => {
+			.then(({ data } = {}) => {
 				if (!data.success) {
 					return { success: false, messageStatus: data.messageStatus }
 				}
 				commit('saveMovies', { data, currentPage: page })
 				return {
 					success: true,
-					data,
+					movies: data.results,
 				}
 			})
 			.catch((err) => {
@@ -83,6 +91,9 @@ export const actions = {
 	removeFromFavourites() {},
 }
 export const mutations = {
+	handleIsLoading(state, val) {
+		state.isLoading = val
+	},
 	changeCurrentPage(state, page) {
 		state.currentPage = page
 	},
@@ -97,12 +108,15 @@ export const mutations = {
 		state.totalPages = totalPages
 		state.totalMoviesResults = totalMoviesResults
 	},
-	saveGenres(state, genres) {
-		state.genres = genres
+	saveSerials(state, { data = {} }) {
+		state.serials = data.results
 	},
+	// saveGenres(state, genres) {
+	// 	// state.genres = genres
+	// },
 	addToFavourites(state, cinema) {
 		state.favourites.push(cinema)
 	},
 
-	removeFromFavourites(state, id) {},
+	// removeFromFavourites(state, id) {},
 }

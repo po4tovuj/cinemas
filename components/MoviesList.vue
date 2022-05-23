@@ -23,7 +23,6 @@
 				</b-card>
 			</b-col>
 		</b-row>
-
 		<div v-if="totalItems" class="pagination">
 			<b-pagination
 				:disabled="isApiLoading"
@@ -57,13 +56,13 @@ export default {
 			moviesList: 'movies/getMovies',
 			totalItems: 'movies/getTotal',
 			currentPage: 'movies/getCurrentPage',
-			isApiLoading: 'isApiLoading',
+			isApiLoading: 'movies/isApiLoading',
 		}),
 	},
 	methods: {
 		...mapActions({
 			getMovies: 'movies/getMovies',
-			handleIsLoading: 'handleIsLoading',
+			handleIsLoading: 'movies/handleIsLoading',
 		}),
 		...mapMutations({
 			changeCurrentPage: 'movies/changeCurrentPage',
