@@ -1,6 +1,6 @@
 import NavBar from '@/components/NavBar.vue';
 <template>
-	<div>
+	<div class="app-wrapper">
 		<nav-bar></nav-bar>
 		<main>
 			<div class="px-3">
@@ -19,3 +19,15 @@ export default {
 	},
 }
 </script>
+<style lang="scss">
+.app-wrapper {
+	html {
+		box-sizing: border-box;
+	}
+	ul {
+		list-style-type: none;
+		padding: 0;
+	}
+}
+</style>
+e

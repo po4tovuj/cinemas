@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<b-navbar toggleable="lg" type="dark" variant="info">
+		<b-navbar toggleable="lg" type="dark" class="nav-bar">
 			<b-navbar-brand href="/">Cinema Watch</b-navbar-brand>
 
 			<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -19,16 +19,16 @@
 						Favorites
 					</nuxt-link>
 				</b-navbar-nav>
-				<!-- filter -->
-				<b-nav-item-dropdown text="Genres" right>
-					<b-dropdown-item href="#">EN</b-dropdown-item>
-					<b-dropdown-item href="#">ES</b-dropdown-item>
-					<b-dropdown-item href="#">RU</b-dropdown-item>
-					<b-dropdown-item href="#">FA</b-dropdown-item>
-				</b-nav-item-dropdown>
 
 				<!-- Right aligned nav items -->
-				<b-navbar-nav class="ml-auto">
+				<b-navbar-nav class="nav-list-wrapper ml-auto">
+					<!-- filter -->
+					<b-nav-item-dropdown class="nav-list mr-4" text="Genres" right>
+						<b-dropdown-item>EN</b-dropdown-item>
+						<b-dropdown-item>ES</b-dropdown-item>
+						<b-dropdown-item>RU</b-dropdown-item>
+						<b-dropdown-item>FA</b-dropdown-item>
+					</b-nav-item-dropdown>
 					<b-nav-form>
 						<b-form-input
 							size="sm"
@@ -40,7 +40,7 @@
 						>
 					</b-nav-form>
 
-					<b-nav-item-dropdown right>
+					<b-nav-item-dropdown class="nav-list" right>
 						<!-- Using 'button-content' slot -->
 						<template #button-content>
 							<em>User</em>
@@ -56,4 +56,33 @@
 <script>
 export default {}
 </script>
-<style lang="scss" scoped></style>
+<style>
+.navbar-dark .navbar-nav .nav-link {
+	color: #fff;
+}
+
+.navbar-dark .dropdown-toggle::after {
+	vertical-align: 1px;
+	margin-left: 0.5em;
+}
+</style>
+
+<style lang="scss" scoped>
+.nav-bar {
+	background-color: rgba(47, 54, 74, 1);
+	.nav-list-wrapper {
+		.nav-list {
+			&:focus,
+			&:active {
+				border: none;
+				outline: none;
+			}
+		}
+	}
+	// .nav-list-wrapper .nav-item.nav-list {
+	// 	.nav-link {
+	// 		color: #fff;
+	// 	}
+	// }
+}
+</style>

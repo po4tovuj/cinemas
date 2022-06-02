@@ -8,6 +8,8 @@ export const state = () => ({
 	serials: [],
 	favourites: [],
 	genres: [],
+	justToCheck: {},
+	currentMovie: null,
 })
 export const getters = {
 	isApiLoading: (state) => state.isLoading,
@@ -50,17 +52,11 @@ export const actions = {
 			})
 	},
 	async getMovies({ commit }, { page = 1, limit = 20, genres = '' } = {}) {
-		const params = new URLSearchParams()
-		params.append('page', page)
-		params.append('limit', limit)
-		params.append('genres', genres)
-		const options = {
-			params,
-		}
-		return await this.$cinema('movies/', options)
+		return await await this.$IMBD_API
+			.get(`/Top250Movies/${process.env.API_KEY}`)
 			.then(({ data } = {}) => {
-				if (!data.success) {
-					return { success: false, messageStatus: data.messageStatus }
+				if (data.errorMessage) {
+					return { success: false, messageStatus: data.errorMessage }
 				}
 				commit('saveMovies', { data, currentPage: page })
 				return {
@@ -70,6 +66,26 @@ export const actions = {
 			})
 			.catch((err) => {
 				const message = err.messageStatus || 'Error! Failed on load movies'
+				throw new Error(message)
+			})
+	},
+	async getSingleMovie(_, { id }) {
+		return await this.$IMBD_API
+			.get(`/Title/${process.env.API_KEY}/${id}/FullActor,Trailer,Ratings,`)
+			.then(({ data = {} }) => {
+				if (data.errorMessage) {
+					return {
+						success: false,
+						movie: data,
+						messageStatus: data.errorMessage || 'not found',
+					}
+				}
+				console.log('data: ', data)
+				// commit('saveCurrentMovie', data.result)
+				return { success: true, movie: data }
+			})
+			.catch((err) => {
+				const message = err.messageStatus || 'Error! Failed on load movie'
 				throw new Error(message)
 			})
 	},
@@ -97,19 +113,22 @@ export const mutations = {
 	changeCurrentPage(state, page) {
 		state.currentPage = page
 	},
-	saveMovies(state, { data, currentPage }) {
+	saveMovies(state, { data }) {
 		const {
-			total_pages: totalPages = 1,
-			results: movies = [],
-			total_results: totalMoviesResults = 0,
+			// total_pages: totalPages = 1,
+			items: movies = [],
+			// total_results: totalMoviesResults = 0,
 		} = data
 		state.movies = movies
-		state.currentPage = currentPage
-		state.totalPages = totalPages
-		state.totalMoviesResults = totalMoviesResults
+		// state.currentPage = currentPage
+		// state.totalPages = totalPages
+		// state.totalMoviesResults = totalMoviesResults
 	},
 	saveSerials(state, { data = {} }) {
 		state.serials = data.results
+	},
+	saveCurrentMovie(state, movie) {
+		state.currentMovie = movie
 	},
 	// saveGenres(state, genres) {
 	// 	// state.genres = genres

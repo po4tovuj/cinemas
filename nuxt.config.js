@@ -26,7 +26,7 @@ export default {
 	},
 
 	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-	plugins: ['@/plugins/axios.js', '@/plugins/cinema.js'],
+	plugins: ['@/plugins/axios.js', '@/plugins/cinema.js', '@/plugins/imdb.js'],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
 	components: false,
@@ -54,6 +54,9 @@ export default {
 	},
 	cinema: {
 		baseURL: process.env.API_URL || '',
+	},
+	env: {
+		API_KEY: process.env.API_KEY,
 	},
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
