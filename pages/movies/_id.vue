@@ -67,6 +67,7 @@
 				<h4 class="some-styles">Actors:</h4>
 				<ul class="actors-list">
 					<li v-for="actor in actors" :key="actor.id" class="actor">
+						<nuxt-link :to="`/actor/${actor.id}`"> click to go</nuxt-link>
 						<b-img width="65" height="90" :src="actor.image" class="mr-3">
 							{{ actor.asCharacter }}
 						</b-img>

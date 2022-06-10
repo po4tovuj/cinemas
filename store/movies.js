@@ -86,6 +86,24 @@ export const actions = {
 				throw new Error(message)
 			})
 	},
+	async getActor({ commit }, id) {
+		return await this.$IMBD_API
+			.get(`/Name/${process.env.API_KEY}/${id}/`)
+			.then(({ data = {} }) => {
+				if (data.errorMessage) {
+					return {
+						success: false,
+						movie: data,
+						messageStatus: data.errorMessage || 'not found',
+					}
+				}
+				return { success: true, actor: data }
+			})
+			.catch((err) => {
+				const message = err.messageStatus || 'Error! Failed on load movie'
+				throw new Error(message)
+			})
+	},
 	async getGenres({ commit }) {
 		await await this.$cinema('genres/')
 			.then(({ data }) => {
