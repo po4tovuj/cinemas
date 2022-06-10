@@ -15,11 +15,8 @@ export default {
 	},
 
 	// Global CSS: https://go.nuxtjs.dev/config-css
-	css: [],
+	css: ['@/assets/styles/_settings'],
 	loaders: {
-		sass: {
-			implementation: require('sass'),
-		},
 		scss: {
 			implementation: require('sass'),
 		},
@@ -37,7 +34,13 @@ export default {
 		'@nuxtjs/eslint-module',
 		// https://go.nuxtjs.dev/stylelint
 		'@nuxtjs/stylelint-module',
+		// for scss
+		'@nuxtjs/style-resources',
 	],
+	styleResources: {
+		scss: ['~assets/abstracts/_mixins.scss'],
+		hoistUseStatements: true, // Hoists the "@use" imports. Applies only to "sass", "scss" and "less". Default: false.
+	},
 
 	// Modules: https://go.nuxtjs.dev/config-modules
 	modules: [

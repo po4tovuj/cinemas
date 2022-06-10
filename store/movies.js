@@ -13,7 +13,6 @@ export const state = () => ({
 })
 export const getters = {
 	isApiLoading: (state) => state.isLoading,
-
 	getMovies: (state) => state.movies,
 	getTotal: (state) => state.totalMoviesResults,
 	getFavourite: (state) => {
@@ -80,8 +79,6 @@ export const actions = {
 						messageStatus: data.errorMessage || 'not found',
 					}
 				}
-				console.log('data: ', data)
-				// commit('saveCurrentMovie', data.result)
 				return { success: true, movie: data }
 			})
 			.catch((err) => {

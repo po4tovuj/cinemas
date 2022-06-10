@@ -21,13 +21,7 @@ export default {
 </script>
 <style lang="scss">
 .app-wrapper {
-	html {
-		box-sizing: border-box;
-	}
-	ul {
-		list-style-type: none;
-		padding: 0;
-	}
+	
 }
 </style>
 e
